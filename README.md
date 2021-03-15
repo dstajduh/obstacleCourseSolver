@@ -1,1 +1,1 @@
-# obstacleCourseSolver.
+# obstacleCourseSolver
