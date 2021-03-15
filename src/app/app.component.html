@@ -1,0 +1,43 @@
+<!-- primeng toast za prikaz poruke korisniku -->
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<!-- header stranice koji sadrzi naslov i botune za promjenu tema te botun za pomoc sa detaljnijim opisima pojedinih elemenata -->
+<div class="header">
+    <div class="header-title">Obstacle Course Solver</div>
+    <div class="header-theme">
+        <img class="header-theme-light" src="assets/img/light32.png" (click)="changeTheme('light')" />
+        <img class="header-theme-dark" src="assets/img/dark32.png" (click)="changeTheme('dark')" />
+        <img class="header-theme-help" src="assets/img/help32.png" (click)="help()" />
+    </div>
+</div>
+
+<!-- izbornik na kojem se nalazi definiranje velicine grida te botuni za odabir elemenata -->
+<div class="grid-menu">
+    <input class="grid-menu-rows" type="text" maxlength="2" [pKeyFilter]="numbers" pInputText [(ngModel)]="gridRowsNum">  
+    <div class="grid-menu-x">X</div>       
+    <input class="grid-menu-columns" type="text" maxlength="2" [pKeyFilter]="numbers" pInputText [(ngModel)]="gridColumnsNum">   
+    <button class="grid-menu-button" pButton type="button" label="Reset" (click)="setGridElements()" ></button>
+
+    <img [ngClass]="{'grid-menu-start': userState != 'start' && startUsed == false, 'grid-menu-start-active': userState == 'start' && startUsed == false, 'grid-menu-start-used': startUsed == true}" src="assets/img/start64.png" alt="" title="Start" (click)="setUserState('start')">
+    <img [ngClass]="{'grid-menu-end': userState != 'end' && endUsed == false, 'grid-menu-end-active': userState == 'end' && endUsed == false, 'grid-menu-end-used': endUsed == true}" src="assets/img/end64.png" alt="" title="End" (click)="setUserState('end')">
+    <img [ngClass]="{'grid-menu-boulder': userState != 'boulder', 'grid-menu-boulder-active': userState == 'boulder'}" src="assets/img/boulder64.png" alt="" title="Boulder" (click)="setUserState('boulder')">
+    <img [ngClass]="{'grid-menu-gravel': userState != 'gravel', 'grid-menu-gravel-active': userState == 'gravel'}" src="assets/img/gravel64.png" alt="" title="Gravel" (click)="setUserState('gravel')">
+    <img [ngClass]="{'grid-menu-wormholeEntrance': userState != 'wormholeEntrance', 'grid-menu-wormholeEntrance-active': userState == 'wormholeEntrance'}" src="assets/img/wormholeEntrance64.png" alt="" title="Wormhole entrance" (click)="setUserState('wormholeEntrance')">
+    <img [ngClass]="{'grid-menu-wormholeExit': userState != 'wormholeExit', 'grid-menu-wormholeExit-active': userState == 'wormholeExit'}" src="assets/img/wormholeExit64.png" alt="" title="Wormhole exit" (click)="setUserState('wormholeExit')">
+    <img [ngClass]="{'grid-menu-blank': userState != 'blank', 'grid-menu-blank-active': userState == 'blank'}" src="assets/img/blank64.png" alt="" title="Blank" (click)="setUserState('blank')">
+    <img class="grid-menu-calculate" src="assets/img/path64.png" alt="" title="Calculates the shortest route" (click)="calculateRoute()">
+</div>
+
+<!-- grid -->
+<div class="grid-wrapper"> 
+    <div id="grid">
+        <div *ngFor="let element of gridElementsArray" id="el{{element.elementIndex}}" [ngClass]="{'grid-element': element.path == false, 'grid-element-path': element.path == true}" (click)="gridElementClick(element)">
+            <img *ngIf="element.elementState === 'start'" class="grid-element-img" [src]="imgSize == 64 ? 'assets/img/start64.png' : 'assets/img/start32.png'" alt="">
+            <img *ngIf="element.elementState === 'end'" class="grid-element-img" [src]="imgSize == 64 ? 'assets/img/end64.png' : 'assets/img/end32.png'" alt="">
+            <img *ngIf="element.elementState === 'boulder'" class="grid-element-img" [src]="imgSize == 64 ? 'assets/img/boulder64.png' : 'assets/img/boulder32.png'" alt="">
+            <img *ngIf="element.elementState === 'gravel'" class="grid-element-img" [src]="imgSize == 64 ? 'assets/img/gravel64.png' : 'assets/img/gravel32.png'" alt="">
+            <img *ngIf="element.elementState === 'wormholeEntrance'" class="grid-element-img" [src]="imgSize == 64 ? 'assets/img/wormholeEntrance64.png' : 'assets/img/wormholeEntrance32.png'" alt="">
+            <img *ngIf="element.elementState === 'wormholeExit'" class="grid-element-img" [src]="imgSize == 64 ? 'assets/img/wormholeExit64.png' : 'assets/img/wormholeExit32.png'" alt="">
+        </div>
+    </div>  
+</div>
